@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SalesDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="SalesDBModelStoreContainer">
+          <EntitySet Name="employee" EntityType="SalesDBModel.Store.employee" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="inventory" EntityType="SalesDBModel.Store.inventory" store:Type="Tables" store:Schema="dbo" store:Name="inventory">
+            <DefiningQuery>SELECT 
+      [inventory].[item_id] AS [item_id], 
+      [inventory].[upd_date] AS [upd_date], 
+      [inventory].[total_qty] AS [total_qty], 
+      [inventory].[vendor_id] AS [vendor_id], 
+      [inventory].[out_of_stock] AS [out_of_stock], 
+      [inventory].[extra_1] AS [extra_1], 
+      [inventory].[extra_2] AS [extra_2], 
+      [inventory].[extra_3] AS [extra_3]
+      FROM [dbo].[inventory] AS [inventory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="item" EntityType="SalesDBModel.Store.item" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="product" EntityType="SalesDBModel.Store.product" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sales_details" EntityType="SalesDBModel.Store.sales_details" store:Type="Tables" store:Schema="dbo" store:Name="sales_details">
+            <DefiningQuery>SELECT 
+      [sales_details].[invoice_no] AS [invoice_no], 
+      [sales_details].[prod_id] AS [prod_id], 
+      [sales_details].[unit_price] AS [unit_price], 
+      [sales_details].[qty] AS [qty], 
+      [sales_details].[total_amount] AS [total_amount], 
+      [sales_details].[discount] AS [discount], 
+      [sales_details].[status] AS [status], 
+      [sales_details].[extra_1] AS [extra_1], 
+      [sales_details].[extra_2] AS [extra_2], 
+      [sales_details].[extra_3] AS [extra_3], 
+      [sales_details].[extra_4] AS [extra_4]
+      FROM [dbo].[sales_details] AS [sales_details]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="sales_master" EntityType="SalesDBModel.Store.sales_master" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="vendor" EntityType="SalesDBModel.Store.vendor" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="uname" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" />
+          <Property Name="dob" Type="varchar" MaxLength="50" />
+          <Property Name="designation" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="contact_no" Type="varchar" MaxLength="50" />
+          <Property Name="extra_1" Type="varchar" MaxLength="50" />
+          <Property Name="extra_2" Type="varchar" MaxLength="50" />
+          <Property Name="extra_3" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'E:\SALESTUBE\SALESTUBE\SALESTUBE\APP_DATA\SALESDB.MDF.dbo.inventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="item_id" />
+            <PropertyRef Name="vendor_id" />
+          </Key>
+          <Property Name="item_id" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="upd_date" Type="varchar" MaxLength="50" />
+          <Property Name="total_qty" Type="int" />
+          <Property Name="vendor_id" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="out_of_stock" Type="varchar" MaxLength="50" />
+          <Property Name="extra_1" Type="varchar" MaxLength="50" />
+          <Property Name="extra_2" Type="varchar" MaxLength="50" />
+          <Property Name="extra_3" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="item_id" />
+          </Key>
+          <Property Name="item_id" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="item_name" Type="varchar" MaxLength="50" />
+          <Property Name="item_desc" Type="varchar(max)" />
+          <Property Name="manufacturer" Type="varchar" MaxLength="50" />
+          <Property Name="unit_price" Type="float" />
+          <Property Name="qty" Type="int" />
+          <Property Name="exp_date" Type="varchar" MaxLength="50" />
+          <Property Name="mfg_date" Type="varchar" MaxLength="50" />
+          <Property Name="prod_id" Type="varbinary" MaxLength="50" />
+          <Property Name="extra_1" Type="varchar" MaxLength="50" />
+          <Property Name="extra_2" Type="varchar" MaxLength="50" />
+          <Property Name="extra_3" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="prod_name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="prod_desc" Type="varchar(max)" />
+          <Property Name="prod_price" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'E:\SALESTUBE\SALESTUBE\SALESTUBE\APP_DATA\SALESDB.MDF.dbo.sales_details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="sales_details">
+          <Key>
+            <PropertyRef Name="invoice_no" />
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="invoice_no" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="prod_id" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="unit_price" Type="float" />
+          <Property Name="qty" Type="int" />
+          <Property Name="total_amount" Type="float" />
+          <Property Name="discount" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="10" />
+          <Property Name="extra_1" Type="varchar" MaxLength="50" />
+          <Property Name="extra_2" Type="varchar" MaxLength="50" />
+          <Property Name="extra_3" Type="varchar" MaxLength="50" />
+          <Property Name="extra_4" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sales_master">
+          <Key>
+            <PropertyRef Name="invoice_no" />
+          </Key>
+          <Property Name="invoice_no" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="aarmount" Type="float" />
+          <Property Name="pay_node" Type="varchar" MaxLength="50" />
+          <Property Name="cheque_no" Type="varchar" MaxLength="50" />
+          <Property Name="dd_no" Type="varchar" MaxLength="50" />
+          <Property Name="discount" Type="int" />
+          <Property Name="disc_amount" Type="float" />
+          <Property Name="base_amount" Type="float" />
+          <Property Name="emp_id" Type="varbinary" MaxLength="50" />
+          <Property Name="invoice_date" Type="varchar" MaxLength="50" />
+          <Property Name="remarks" Type="varchar(max)" />
+          <Property Name="extra_1" Type="varchar" MaxLength="50" />
+          <Property Name="extra_2" Type="varchar" MaxLength="50" />
+          <Property Name="extra_3" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="vendor">
+          <Key>
+            <PropertyRef Name="vendor_id" />
+          </Key>
+          <Property Name="vendor_id" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="vendor_name" Type="varchar" MaxLength="50" />
+          <Property Name="vendor_desc" Type="varchar(max)" />
+          <Property Name="vendor_addr" Type="varchar" MaxLength="50" />
+          <Property Name="extra_1" Type="varchar" MaxLength="50" />
+          <Property Name="extra_2" Type="varchar" MaxLength="50" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SalesDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="SalesDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="employees" EntityType="SalesDBModel.employee" />
+          <EntitySet Name="inventories" EntityType="SalesDBModel.inventory" />
+          <EntitySet Name="items" EntityType="SalesDBModel.item" />
+          <EntitySet Name="products" EntityType="SalesDBModel.product" />
+          <EntitySet Name="sales_details" EntityType="SalesDBModel.sales_details" />
+          <EntitySet Name="sales_master" EntityType="SalesDBModel.sales_master" />
+          <EntitySet Name="vendors" EntityType="SalesDBModel.vendor" />
+        </EntityContainer>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="uname" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="dob" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="designation" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="contact_no" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_3" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="item_id" />
+            <PropertyRef Name="vendor_id" />
+          </Key>
+          <Property Name="item_id" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="upd_date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="total_qty" Type="Int32" />
+          <Property Name="vendor_id" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="out_of_stock" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_3" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="item_id" />
+          </Key>
+          <Property Name="item_id" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="item_name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="item_desc" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="manufacturer" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="unit_price" Type="Double" />
+          <Property Name="qty" Type="Int32" />
+          <Property Name="exp_date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="mfg_date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="prod_id" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="extra_1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_3" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="prod_name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="prod_desc" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="prod_price" Type="Double" />
+        </EntityType>
+        <EntityType Name="sales_details">
+          <Key>
+            <PropertyRef Name="invoice_no" />
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="invoice_no" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="prod_id" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="unit_price" Type="Double" />
+          <Property Name="qty" Type="Int32" />
+          <Property Name="total_amount" Type="Double" />
+          <Property Name="discount" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="extra_1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_3" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_4" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="sales_master">
+          <Key>
+            <PropertyRef Name="invoice_no" />
+          </Key>
+          <Property Name="invoice_no" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="aarmount" Type="Double" />
+          <Property Name="pay_node" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="cheque_no" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="dd_no" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="discount" Type="Int32" />
+          <Property Name="disc_amount" Type="Double" />
+          <Property Name="base_amount" Type="Double" />
+          <Property Name="emp_id" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="invoice_date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="remarks" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="extra_1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_3" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="vendor">
+          <Key>
+            <PropertyRef Name="vendor_id" />
+          </Key>
+          <Property Name="vendor_id" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="vendor_name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="vendor_desc" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="vendor_addr" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="extra_2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SalesDBModelStoreContainer" CdmEntityContainer="SalesDBEntities">
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="SalesDBModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="uname" ColumnName="uname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="contact_no" ColumnName="contact_no" />
+                <ScalarProperty Name="extra_1" ColumnName="extra_1" />
+                <ScalarProperty Name="extra_2" ColumnName="extra_2" />
+                <ScalarProperty Name="extra_3" ColumnName="extra_3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventories">
+            <EntityTypeMapping TypeName="SalesDBModel.inventory">
+              <MappingFragment StoreEntitySet="inventory">
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="upd_date" ColumnName="upd_date" />
+                <ScalarProperty Name="total_qty" ColumnName="total_qty" />
+                <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+                <ScalarProperty Name="out_of_stock" ColumnName="out_of_stock" />
+                <ScalarProperty Name="extra_1" ColumnName="extra_1" />
+                <ScalarProperty Name="extra_2" ColumnName="extra_2" />
+                <ScalarProperty Name="extra_3" ColumnName="extra_3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="SalesDBModel.item">
+              <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="item_name" ColumnName="item_name" />
+                <ScalarProperty Name="item_desc" ColumnName="item_desc" />
+                <ScalarProperty Name="manufacturer" ColumnName="manufacturer" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="exp_date" ColumnName="exp_date" />
+                <ScalarProperty Name="mfg_date" ColumnName="mfg_date" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="extra_1" ColumnName="extra_1" />
+                <ScalarProperty Name="extra_2" ColumnName="extra_2" />
+                <ScalarProperty Name="extra_3" ColumnName="extra_3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="SalesDBModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="prod_name" ColumnName="prod_name" />
+                <ScalarProperty Name="prod_desc" ColumnName="prod_desc" />
+                <ScalarProperty Name="prod_price" ColumnName="prod_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales_details">
+            <EntityTypeMapping TypeName="SalesDBModel.sales_details">
+              <MappingFragment StoreEntitySet="sales_details">
+                <ScalarProperty Name="invoice_no" ColumnName="invoice_no" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="extra_1" ColumnName="extra_1" />
+                <ScalarProperty Name="extra_2" ColumnName="extra_2" />
+                <ScalarProperty Name="extra_3" ColumnName="extra_3" />
+                <ScalarProperty Name="extra_4" ColumnName="extra_4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales_master">
+            <EntityTypeMapping TypeName="SalesDBModel.sales_master">
+              <MappingFragment StoreEntitySet="sales_master">
+                <ScalarProperty Name="invoice_no" ColumnName="invoice_no" />
+                <ScalarProperty Name="aarmount" ColumnName="aarmount" />
+                <ScalarProperty Name="pay_node" ColumnName="pay_node" />
+                <ScalarProperty Name="cheque_no" ColumnName="cheque_no" />
+                <ScalarProperty Name="dd_no" ColumnName="dd_no" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="disc_amount" ColumnName="disc_amount" />
+                <ScalarProperty Name="base_amount" ColumnName="base_amount" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="invoice_date" ColumnName="invoice_date" />
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+                <ScalarProperty Name="extra_1" ColumnName="extra_1" />
+                <ScalarProperty Name="extra_2" ColumnName="extra_2" />
+                <ScalarProperty Name="extra_3" ColumnName="extra_3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vendors">
+            <EntityTypeMapping TypeName="SalesDBModel.vendor">
+              <MappingFragment StoreEntitySet="vendor">
+                <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+                <ScalarProperty Name="vendor_name" ColumnName="vendor_name" />
+                <ScalarProperty Name="vendor_desc" ColumnName="vendor_desc" />
+                <ScalarProperty Name="vendor_addr" ColumnName="vendor_addr" />
+                <ScalarProperty Name="extra_1" ColumnName="extra_1" />
+                <ScalarProperty Name="extra_2" ColumnName="extra_2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
